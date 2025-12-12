@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Sederhana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 40px;
+        }
+        .page {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        input {
+            padding: 8px;
+            width: 200px;
+        }
+
+        /* Background untuk jawaban "iya" */
+        #page3.bg-image {
+            background-image: url('img/download.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px;
+            text-shadow: 1px 1px 3px black;
+        }
+
+        /* Style untuk video */
+        #page3 video {
+            width: 50%;
+            max-width: 600px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1 -->
+    <div id="page1" class="page active">
+        <h2>Masukkan Nama:</h2>
+        <input type="text" id="nama" placeholder="Nama kamu">
+        <br>
+        <button onclick="goToPage2()">Lanjut</button>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div id="page2" class="page">
+        <h2>Apakah kamu jomok?</h2>
+        <button onclick="jawab('iya')">Iya</button>
+        <button onclick="jawab('tidak')">Tidak</button>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div id="page3" class="page">
+        <h2 id="hasil"></h2>
+        <div id="videoContainer"></div>
+    </div>
+
+<script>
+    function goToPage2() {
+        const nama = document.getElementById("nama").value.trim();
+        if (nama === "") {
+            alert("Nama tidak boleh kosong");
+            return;
+        }
+        document.getElementById("page1").classList.remove("active");
+        document.getElementById("page2").classList.add("active");
+    }
+
+    function jawab(pilihan) {
+        const nama = document.getElementById("nama").value;
+        const page3 = document.getElementById("page3");
+        const hasil = document.getElementById("hasil");
+        const videoContainer = document.getElementById("videoContainer");
+
+        // Reset tampilan
+        page3.classList.remove("bg-image");
+        videoContainer.innerHTML = "";
+
+        if (pilihan === "iya") {
+            hasil.innerText = `Tobat ${nama}, kasian bapakmu.`;
+            page3.classList.add("bg-image");
+
+        } else {
+            hasil.innerText = "MANTAPPP";
+
+            // Tampilkan video dari folder lokal
+            videoContainer.innerHTML =`
+                <video autoplay loop>
+                    <source src="videos/Video2.mp4" type="Video/mp4">
+                    Browser kamu tidak mendukung video.
+                </video>
+             `   
+            ;
+        }
+
+        document.getElementById("page2").classList.remove("active");
+        page3.classList.add("active");
+    }
+</script>
+
+</body>
+</html>
